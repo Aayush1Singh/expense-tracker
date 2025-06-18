@@ -76,7 +76,7 @@ npm run dev
 ---
 
 ## 📝 Assumptions
-
+- The Device on which this container is runned is connected via a internet connection
 - The backend and frontend communicate via RESTful APIs.
 - All endpoints require valid data; no authentication middleware is implemented by default.
 - The frontend expects the backend to be running at `http://localhost:8000` (update in frontend config if changed).
