@@ -25,7 +25,7 @@ const LandingPage = () => {
             </div>
             <div className="flex items-center space-x-4">
               <Link
-                to="/login"
+                to="/signin"
                 className="px-4 py-2 font-medium text-gray-700 transition-colors rounded-lg hover:text-blue-600"
               >
                 Sign In
@@ -63,7 +63,7 @@ const LandingPage = () => {
               <ArrowRight className="w-5 h-5" />
             </Link>
             <Link
-              to="/login"
+              to="/signin"
               className="px-8 py-4 text-lg font-semibold text-gray-700 transition-all duration-200 border-2 border-gray-300 hover:border-blue-500 hover:text-blue-600 rounded-xl hover:bg-white/50"
             >
               Sign In
@@ -177,7 +177,7 @@ const LandingPage = () => {
             </div>
             <div className="flex items-center space-x-6">
               <Link
-                to="/login"
+                to="/signin"
                 className="text-gray-300 transition-colors hover:text-white"
               >
                 Sign In

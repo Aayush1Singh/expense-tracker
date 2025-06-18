@@ -1,4 +1,3 @@
-from datetime import datetime
 from models.User import User
 from models.Group import Group
 from models.Expenses import Expense

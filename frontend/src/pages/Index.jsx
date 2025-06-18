@@ -7,10 +7,10 @@ import {
   TrendingUp,
   Sparkle,
 } from "lucide-react";
-import GroupCard from "../components/GroupCard";
-import ExpenseForm from "../components/ExpenseForm";
+import GroupCard from "../components/GroupCard.js";
+import ExpenseForm from "../components/ExpenseForm.jsx";
 import PersonalSummary from "../components/PersonalSummary.jsx";
-import CreateGroupModal from "../components/CreateGroupModal";
+import CreateGroupModal from "../components/CreateGroupModal.jsx";
 import { getGroups } from "../services/Handler.jsx";
 import { useSelector } from "react-redux";
 import PayBack from "../components/PayBack.jsx";

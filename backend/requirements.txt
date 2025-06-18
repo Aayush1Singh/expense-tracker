@@ -1,1 +1,7 @@
-mongoengine== 0.29.1
+fastapi
+uvicorn[standard]
+python-dotenv
+pymongo
+mongoengine
+langchain
+langchain-google-genai

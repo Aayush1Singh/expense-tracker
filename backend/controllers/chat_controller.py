@@ -8,7 +8,6 @@ from pymongo import MongoClient
 from models.User import User
 from models.Expenses import Expense,SplitType
 from models.Group import Group
-from mongoengine.errors import InvalidQueryError
 load_dotenv()
 mongo_url = os.getenv("MONGO_URI", "mongodb://localhost:27017")
 client=MongoClient(mongo_url)

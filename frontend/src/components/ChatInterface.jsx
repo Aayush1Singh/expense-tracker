@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Send, Menu, MessageSquare } from "lucide-react";
 import ChatMessage from "./ChatMessage";
-import ChatSidebar from "./ChatSidebar";
+import ChatSidebar from "./ChatSideBar";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { createSession, loadChat, queryResolve } from "../services/Handler";
