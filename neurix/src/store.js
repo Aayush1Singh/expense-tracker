@@ -23,7 +23,6 @@ export const userSlice = createSlice({
     },
   },
 });
-
 const persistedReducer = persistReducer(persistConfig, userSlice.reducer);
 
 export const { login, logout } = userSlice.actions;

@@ -3,15 +3,14 @@ import { useNavigate } from "react-router-dom";
 
 const GroupCard = ({ group, onAddExpense, setDefaultGroup }) => {
   const navigate = useNavigate();
-  console.log(group);
   return (
     <div
-      className="group relative overflow-hidden"
+      className="relative group"
       onClick={(e) => {
         e.preventDefault();
         e.stopPropagation();
         console.log("hola");
-        navigate(`/u/${group.id}`);
+        navigate(`/u/details/${group.id}`);
       }}
     >
       <div
@@ -19,12 +18,12 @@ const GroupCard = ({ group, onAddExpense, setDefaultGroup }) => {
       >
         <div className="flex items-start justify-between mb-4">
           <div className="flex items-center space-x-3">
-            <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
+            <div className="flex items-center justify-center w-12 h-12 bg-white/20 rounded-xl backdrop-blur-sm">
               <Users className="w-6 h-6" />
             </div>
             <div>
               <h3 className="text-xl font-bold">{group.name}</h3>
-              <p className="text-white/80 text-sm">
+              <p className="text-sm text-white/80">
                 {group.members.length} members
               </p>
             </div>
@@ -36,7 +35,7 @@ const GroupCard = ({ group, onAddExpense, setDefaultGroup }) => {
               setDefaultGroup(group.id);
               onAddExpense();
             }}
-            className="w-10 h-10 bg-white/20 rounded-xl  items-center justify-center backdrop-blur-sm hover:bg-white/30 transition-all duration-200 transform hover:scale-110 z-50"
+            className="z-50 justify-center transition-all duration-200 transform bg-white/20 rounded-xl backdrop-blur-sm hover:bg-white/30 hover:scale-110 h-fit w-fit"
           >
             <Plus className="w-5 h-5" />
           </button>
@@ -44,15 +43,15 @@ const GroupCard = ({ group, onAddExpense, setDefaultGroup }) => {
 
         <div className="space-y-3">
           <div className="pt-3 border-t border-white/20">
-            <p className="text-white/80 text-sm mb-2">
+            <p className="mb-2 text-sm text-white/80">
               Click to Load more details
             </p>
-            <p className="text-white/80 text-sm mb-2">Members</p>
+            <p className="mb-2 text-sm text-white/80">Members</p>
             <div className="flex -space-x-2">
               {group.members.map((member, index) => (
                 <div
                   key={index}
-                  className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm border-2 border-white/30"
+                  className="flex items-center justify-center w-8 h-8 border-2 rounded-full bg-white/20 backdrop-blur-sm border-white/30"
                   title={member}
                 >
                   <span className="text-xs font-medium">
@@ -65,7 +64,7 @@ const GroupCard = ({ group, onAddExpense, setDefaultGroup }) => {
         </div>
 
         {/* Hover overlay */}
-        <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl z-0"></div>
+        <div className="absolute inset-0 z-0 transition-opacity duration-300 opacity-0 bg-white/20 group-hover:opacity-100 rounded-2xl"></div>
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import { TrendingUp, TrendingDown, DollarSign, PieChart } from "lucide-react";
 import { useEffect, useState } from "react";
-import { getUserSummary } from "../services/loginHandler";
+import { getUserSummary } from "../services/Handler";
 import { useSelector } from "react-redux";
 import { Plus, Users, Receipt } from "lucide-react";
 const PersonalSummary = () => {
@@ -44,7 +44,7 @@ const PersonalSummary = () => {
       >
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h3 className="text-white/80 text-sm font-medium mb-2">
+            <h3 className="mb-2 text-sm font-medium text-white/80">
               Net Balance
             </h3>
             <div className="flex items-center space-x-3">
@@ -54,7 +54,7 @@ const PersonalSummary = () => {
               </span>
             </div>
           </div>
-          <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
+          <div className="flex items-center justify-center w-16 h-16 bg-white/20 rounded-2xl backdrop-blur-sm">
             {isPositive ? (
               <TrendingUp className="w-8 h-8" />
             ) : (
@@ -70,11 +70,11 @@ const PersonalSummary = () => {
       </div>
 
       {/* Breakdown Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         {/* Amount Owed to You */}
-        <div className="bg-white rounded-2xl p-6 shadow-sm border hover:shadow-md transition-all duration-200">
-          <div className="flex items-center space-x-4 mb-4">
-            <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+        <div className="p-6 transition-all duration-200 bg-white border shadow-sm rounded-2xl hover:shadow-md">
+          <div className="flex items-center mb-4 space-x-4">
+            <div className="flex items-center justify-center w-12 h-12 bg-green-100 rounded-xl">
               <TrendingUp className="w-6 h-6 text-green-600" />
             </div>
             <div>
@@ -84,18 +84,18 @@ const PersonalSummary = () => {
               </p>
             </div>
           </div>
-          <p className="text-gray-500 text-sm">Money others owe you</p>
-          <div className="mt-4 bg-green-50 p-3 rounded-xl">
-            <p className="text-green-700 text-sm font-medium">
+          <p className="text-sm text-gray-500">Money others owe you</p>
+          <div className="p-3 mt-4 bg-green-50 rounded-xl">
+            <p className="text-sm font-medium text-green-700">
               💡 Send reminders to settle up faster
             </p>
           </div>
         </div>
 
         {/* Amount You Owe */}
-        <div className="bg-white rounded-2xl p-6 shadow-sm border hover:shadow-md transition-all duration-200">
-          <div className="flex items-center space-x-4 mb-4">
-            <div className="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center">
+        <div className="p-6 transition-all duration-200 bg-white border shadow-sm rounded-2xl hover:shadow-md">
+          <div className="flex items-center mb-4 space-x-4">
+            <div className="flex items-center justify-center w-12 h-12 bg-red-100 rounded-xl">
               <TrendingDown className="w-6 h-6 text-red-600" />
             </div>
             <div>
@@ -105,9 +105,9 @@ const PersonalSummary = () => {
               </p>
             </div>
           </div>
-          <p className="text-gray-500 text-sm">Money you owe others</p>
-          <div className="mt-4 bg-red-50 p-3 rounded-xl">
-            <p className="text-red-700 text-sm font-medium">
+          <p className="text-sm text-gray-500">Money you owe others</p>
+          <div className="p-3 mt-4 bg-red-50 rounded-xl">
+            <p className="text-sm font-medium text-red-700">
               💳 Pay now to keep your balance healthy
             </p>
           </div>
@@ -115,34 +115,9 @@ const PersonalSummary = () => {
       </div>
 
       {/* Quick Actions */}
-      {/* <div className="bg-white rounded-2xl p-6 shadow-sm border">
-        <div className="flex items-center space-x-3 mb-6">
-          <div className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center">
-            <PieChart className="w-5 h-5 text-blue-600" />
-          </div>
-          <h4 className="text-lg font-semibold text-gray-900">Quick Actions</h4>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <button className="p-4 bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-xl hover:from-blue-600 hover:to-cyan-600 transition-all duration-200 transform hover:scale-105 shadow-lg">
-            <div className="text-2xl mb-2">📊</div>
-            <div className="font-medium">View Details</div>
-          </button>
-
-          <button className="p-4 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-xl hover:from-green-600 hover:to-emerald-600 transition-all duration-200 transform hover:scale-105 shadow-lg">
-            <div className="text-2xl mb-2">💰</div>
-            <div className="font-medium">Settle Up</div>
-          </button>
-
-          <button className="p-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl hover:from-purple-600 hover:to-pink-600 transition-all duration-200 transform hover:scale-105 shadow-lg">
-            <div className="text-2xl mb-2">📱</div>
-            <div className="font-medium">Send Reminder</div>
-          </button>
-        </div>
-      </div> */}
       {
         <div>
-          <h4 className="text-lg font-semibold text-gray-900 mb-4">
+          <h4 className="mb-4 text-lg font-semibold text-gray-900">
             Recent Activity
           </h4>
           <div className="space-y-4">
@@ -194,58 +169,6 @@ const PersonalSummary = () => {
           </div>
         </div>
       }
-      {/* Recent Activity */}
-      {/* <div className="bg-white rounded-2xl p-6 shadow-sm border">
-        <h4 className="text-lg font-semibold text-gray-900 mb-4">
-          Recent Activity
-        </h4>
-        <div className="space-y-3">
-          {[
-            {
-              action: "You paid $85.50 for dinner",
-              time: "2 hours ago",
-              type: "payment",
-            },
-            {
-              action: "Alice added hotel booking expense",
-              time: "1 day ago",
-              type: "expense",
-            },
-            {
-              action: "Bob settled up with you",
-              time: "3 days ago",
-              type: "settle",
-            },
-          ].map((activity, index) => (
-            <div
-              key={index}
-              className="flex items-center space-x-3 p-3 bg-gray-50 rounded-xl"
-            >
-              <div
-                className={`w-8 h-8 rounded-full flex items-center justify-center text-sm ${
-                  activity.type === "payment"
-                    ? "bg-blue-100 text-blue-600"
-                    : activity.type === "expense"
-                    ? "bg-orange-100 text-orange-600"
-                    : "bg-green-100 text-green-600"
-                }`}
-              >
-                {activity.type === "payment"
-                  ? "💳"
-                  : activity.type === "expense"
-                  ? "📝"
-                  : "✅"}
-              </div>
-              <div className="flex-1">
-                <p className="text-gray-900 font-medium text-sm">
-                  {activity.action}
-                </p>
-                <p className="text-gray-500 text-xs">{activity.time}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div> */}
     </div>
   );
 };

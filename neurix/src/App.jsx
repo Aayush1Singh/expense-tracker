@@ -1,48 +1,49 @@
-// import { Toaster } from "@/components/ui/toaster";
-// import { Toaster as Sonner } from "@/components/ui/sonner";
-// import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import AuthForm from "./pages/AuthForm.jsx";
-import { store } from "./store.js";
-import { Provider } from "react-redux";
-import { PersistGate } from "redux-persist/integration/react";
-import persistStore from "redux-persist/es/persistStore";
+import { useSelector } from "react-redux";
 import GroupDetails from "./components/GroupDetails.jsx";
-const queryClient = new QueryClient();
-let persistor = persistStore(store);
+import { ToastContainer } from "react-toastify";
+import Chat from "./pages/Chat.jsx";
+import LandingPage from "./pages/LandingPage.jsx";
 
-const App = () => (
-  <Provider store={store}>
-    <PersistGate loading={null} persistor={persistor}>
-      {/* <QueryClientProvider client={queryClient}> */}
-      {/* <TooltipProvider> */}
-      {/* <Toaster /> */}
-      {/* <Sonner /> */}
-      <BrowserRouter>
-        <Routes>
+function App() {
+  const username = useSelector((state) => state.user.username);
+  return (
+    <BrowserRouter>
+      <Routes>
+        {username != "" && (
           <Route path="/u">
             <Route path="" element={<Index />}></Route>
-            <Route path=":groupID" element={<GroupDetails />}></Route>
+            <Route path="chat" element={<Chat />} />
+            <Route path="details/:groupID" element={<GroupDetails />}></Route>
           </Route>
-          <Route
-            path="/signin"
-            element={<AuthForm isLogin={true}></AuthForm>}
-          ></Route>
-          <Route
-            path="/signup"
-            element={<AuthForm isLogin={false}></AuthForm>}
-          ></Route>
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-      {/* </TooltipProvider> */}
-      {/* </QueryClientProvider> */}
-    </PersistGate>
-  </Provider>
-);
+        )}
+        <Route
+          path="/signin"
+          element={<AuthForm isLogin={true}></AuthForm>}
+        ></Route>
+        <Route
+          path="/signup"
+          element={<AuthForm isLogin={false}></AuthForm>}
+        ></Route>
+        <Route path="*" element={<LandingPage />} />
+      </Routes>
+      <ToastContainer
+        position="bottom-left"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+    </BrowserRouter>
+  );
+}
 
 export default App;

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { X, Plus, Users, Trash2 } from "lucide-react";
-import { createGroup } from "../services/loginHandler";
+import { createGroup } from "../services/Handler";
 import { useSelector } from "react-redux";
 
 const CreateGroupModal = ({ onClose, onCreateGroup }) => {
@@ -45,13 +45,13 @@ const CreateGroupModal = ({ onClose, onCreateGroup }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
       <div className="bg-white rounded-3xl p-8 max-w-md w-full mx-4 shadow-2xl max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl font-bold text-gray-900">Create New Group</h2>
           <button
             onClick={onClose}
-            className="w-10 h-10 bg-gray-100 rounded-xl  items-center justify-center hover:bg-gray-200 transition-colors duration-200"
+            className="items-center justify-center transition-colors duration-200 bg-black rounded-xl hover:bg-gray-200 w-fit h-fit"
           >
             <X className="w-5 h-5"></X>
           </button>
@@ -60,7 +60,7 @@ const CreateGroupModal = ({ onClose, onCreateGroup }) => {
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Group Name */}
           <div>
-            <label className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-3">
+            <label className="flex items-center mb-3 space-x-2 text-sm font-medium text-gray-700">
               <Users className="w-4 h-4" />
               <span>Group Name</span>
             </label>
@@ -69,14 +69,14 @@ const CreateGroupModal = ({ onClose, onCreateGroup }) => {
               value={groupName}
               onChange={(e) => setGroupName(e.target.value)}
               placeholder="e.g., Weekend Trip, Apartment Rent"
-              className="w-full p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+              className="w-full p-4 transition-all duration-200 border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               required
             />
           </div>
 
           {/* Members */}
           <div>
-            <label className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-3">
+            <label className="flex items-center mb-3 space-x-2 text-sm font-medium text-gray-700">
               <Users className="w-4 h-4" />
               <span>Members</span>
             </label>
@@ -89,13 +89,13 @@ const CreateGroupModal = ({ onClose, onCreateGroup }) => {
                     disabled={username === member}
                     onChange={(e) => updateMember(index, e.target.value)}
                     placeholder={`Member ${index + 1} name`}
-                    className="flex-1 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                    className="flex-1 p-3 transition-all duration-200 border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   />
                   {members.length > 1 && (
                     <button
                       type="button"
                       onClick={() => removeMember(index)}
-                      className="w-10 h-10 bg-red-100 text-red-600 rounded-xl items-center justify-center hover:bg-red-200 transition-colors duration-200 "
+                      className="items-center justify-center text-red-600 transition-colors duration-200 bg-red-100 w-fit h-fit rounded-xl hover:bg-red-200 "
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
@@ -107,7 +107,7 @@ const CreateGroupModal = ({ onClose, onCreateGroup }) => {
             <button
               type="button"
               onClick={addMember}
-              className="mt-3 w-full p-3 border-2 border-dashed border-gray-300 rounded-xl text-gray-500 hover:border-gray-400 hover:text-gray-600 transition-all duration-200 flex items-center justify-center space-x-2"
+              className="flex items-center justify-center w-full p-3 mt-3 space-x-2 text-gray-500 transition-all duration-200 border-2 border-gray-300 border-dashed rounded-xl hover:border-gray-400 hover:text-gray-600"
             >
               <Plus className="w-4 h-4" />
               <span>Add Member</span>
@@ -115,9 +115,9 @@ const CreateGroupModal = ({ onClose, onCreateGroup }) => {
           </div>
 
           {/* Tips */}
-          <div className="bg-blue-50 p-4 rounded-xl border border-blue-200">
-            <h4 className="font-medium text-blue-900 mb-2">💡 Tips</h4>
-            <ul className="text-blue-700 text-sm space-y-1">
+          <div className="p-4 border border-blue-200 bg-blue-50 rounded-xl">
+            <h4 className="mb-2 font-medium text-blue-900">💡 Tips</h4>
+            <ul className="space-y-1 text-sm text-blue-700">
               <li>• Add at least 2 members to create a group</li>
               <li>• You can add more members later</li>
               <li>• Choose a descriptive name for easy identification</li>
@@ -130,7 +130,7 @@ const CreateGroupModal = ({ onClose, onCreateGroup }) => {
             disabled={
               !groupName.trim() || members.filter((m) => m.trim()).length < 2
             }
-            className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white p-4 rounded-xl hover:from-purple-600 hover:to-pink-600 transition-all duration-200 font-medium shadow-lg hover:shadow-xl transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+            className="w-full p-4 font-medium text-white transition-all duration-200 transform shadow-lg bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl hover:from-purple-600 hover:to-pink-600 hover:shadow-xl hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
           >
             Create Group
           </button>

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { X, DollarSign, Receipt, Users, Tag } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
-import { insertExpense } from "../services/loginHandler";
+import { insertExpense } from "../services/Handler";
 
 const ExpenseForm = ({
   defaultGroup,
@@ -10,20 +10,10 @@ const ExpenseForm = ({
   groups,
   selectedGroup,
   onClose,
-  onAddExpense,
 }) => {
   const username = useSelector((state) => state.user.username);
-
   const { register, handleSubmit } = useForm();
   const [isSelected, togglesSelect] = useState(false);
-  // if (defaultGroup) {
-  //   setDefaultGroup((state) => {
-  //     const s = state;
-
-  //     s.groupId = defaultGroup;
-  //     return s;
-  //   });
-  // }
   const [formData, setFormData] = useState({
     groupId: selectedGroup?.id || "",
     description: "",
@@ -37,49 +27,10 @@ const ExpenseForm = ({
     console.log(data);
     insertExpense(data);
   }
-  const categories = [
-    { id: "food", label: "Food & Drinks", color: "bg-orange-500", icon: "🍕" },
-    {
-      id: "accommodation",
-      label: "Accommodation",
-      color: "bg-purple-500",
-      icon: "🏠",
-    },
-    { id: "transport", label: "Transport", color: "bg-blue-500", icon: "🚗" },
-    {
-      id: "entertainment",
-      label: "Entertainment",
-      color: "bg-pink-500",
-      icon: "🎬",
-    },
-    { id: "shopping", label: "Shopping", color: "bg-green-500", icon: "🛍️" },
-    { id: "other", label: "Other", color: "bg-gray-500", icon: "📝" },
-  ];
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   if (
-  //     formData.groupId &&
-  //     formData.description &&
-  //     formData.amount &&
-  //     formData.paidBy
-  //   ) {
-  //     onAddExpense({
-  //       ...formData,
-  //       amount: parseFloat(formData.amount),
-  //       groupId: parseInt(formData.groupId),
-  //     });
-  //     onClose();
-  //   }
-  // };
-
-  const selectedGroupData = groups.find(
-    (g) => g.id === parseInt(formData.groupId)
-  );
 
   return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
-      <div className="bg-white rounded-3xl p-8 max-w-md w-full mx-4 shadow-2xl">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+      <div className="w-full max-w-md p-8 mx-4 bg-white shadow-2xl rounded-3xl">
         <form
           className="flex items-center justify-between mb-6"
           onSubmit={handleSubmit(onSubmit)}
@@ -87,7 +38,7 @@ const ExpenseForm = ({
           <h2 className="text-2xl font-bold text-gray-900">Add Expense</h2>
           <button
             onClick={onClose}
-            className="w-10 h-10 bg-gray-100 rounded-xl flex items-center justify-center hover:bg-gray-200 transition-colors duration-200"
+            className="flex items-center justify-center transition-colors duration-200 bg-black w-fit h-fit rounded-xl hover:bg-gray-200"
           >
             <X className="w-5 h-5" />
           </button>
@@ -96,22 +47,14 @@ const ExpenseForm = ({
         <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
           {/* Group Selection */}
           <div>
-            <label className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-3">
+            <label className="flex items-center mb-3 space-x-2 text-sm font-medium text-gray-700">
               <Users className="w-4 h-4" />
               <span>Group</span>
             </label>
             <select
-              // value={formData.groupId}
               {...register("group_id")}
               onChange={(e) => setDefaultGroup(e.target.value)}
-              // onChange={(e) =>
-              //   setFormData({
-              //     ...formData,
-              //     groupId: e.target.value,
-              //     paidBy: "",
-              //   })
-              // }
-              className="w-full p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 text-black"
+              className="w-full p-4 text-black transition-all duration-200 border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               required
             >
               <option value="">Select a group</option>
@@ -129,7 +72,7 @@ const ExpenseForm = ({
 
           {/* Description */}
           <div>
-            <label className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-3">
+            <label className="flex items-center mb-3 space-x-2 text-sm font-medium text-gray-700">
               <Receipt className="w-4 h-4" />
               <span>Description</span>
             </label>
@@ -141,14 +84,14 @@ const ExpenseForm = ({
                 setFormData({ ...formData, description: e.target.value })
               }
               placeholder="What was this expense for?"
-              className="w-full p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+              className="w-full p-4 transition-all duration-200 border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               required
             />
           </div>
 
           {/* Amount */}
           <div>
-            <label className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-3">
+            <label className="flex items-center mb-3 space-x-2 text-sm font-medium text-gray-700">
               <DollarSign className="w-4 h-4" />
               <span>Amount</span>
             </label>
@@ -161,14 +104,14 @@ const ExpenseForm = ({
                 setFormData({ ...formData, amount: e.target.value })
               }
               placeholder="0.00"
-              className="w-full p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+              className="w-full p-4 transition-all duration-200 border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               required
             />
           </div>
 
           {/* Category */}
           <div>
-            <label className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-3">
+            <label className="flex items-center mb-3 space-x-2 text-sm font-medium text-gray-700">
               <Tag className="w-4 h-4" />
               <span>Type</span>
               <button
@@ -190,7 +133,7 @@ const ExpenseForm = ({
                     if (name == username)
                       return (
                         <>
-                          <label className="text-black justify-center text-1xl">
+                          <label className="justify-center text-black text-1xl">
                             {name}
                           </label>
                           <input
@@ -199,7 +142,7 @@ const ExpenseForm = ({
                             value={isSelected ? 50 : null}
                             {...register(`percentage-${name}`, {})}
                             placeholder="0.00"
-                            className="w-full p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                            className="w-full p-4 transition-all duration-200 border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                             required
                           />
                         </>
@@ -207,7 +150,7 @@ const ExpenseForm = ({
 
                     return (
                       <>
-                        <label className="text-black justify-center flex text-1xl ">
+                        <label className="flex justify-center text-black text-1xl ">
                           {name}
                         </label>
                         <input
@@ -216,7 +159,7 @@ const ExpenseForm = ({
                           value={isSelected ? 50 : null}
                           {...register(`percentage-${name}`)}
                           placeholder="0.00"
-                          className="w-full p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                          className="w-full p-4 transition-all duration-200 border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                           required
                         />
                       </>
@@ -225,35 +168,10 @@ const ExpenseForm = ({
             </div>
           </div>
 
-          {/* Paid By */}
-          {/* {selectedGroupData && (
-            <div>
-              <label className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-3">
-                <Users className="w-4 h-4" />
-                <span>Paid by</span>
-              </label>
-              <select
-                value={formData.paidBy}
-                onChange={(e) =>
-                  setFormData({ ...formData, paidBy: e.target.value })
-                }
-                className="w-full p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
-                required
-              >
-                <option value="">Select who paid</option>
-                {selectedGroupData.members.map((member) => (
-                  <option key={member} value={member}>
-                    {member}
-                  </option>
-                ))}
-              </select>
-            </div>
-          )} */}
-
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white p-4 rounded-xl hover:from-purple-600 hover:to-pink-600 transition-all duration-200 font-medium shadow-lg hover:shadow-xl transform hover:scale-105"
+            className="w-full p-4 font-medium text-white transition-all duration-200 transform shadow-lg bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl hover:from-purple-600 hover:to-pink-600 hover:shadow-xl hover:scale-105"
           >
             Add Expense
           </button>

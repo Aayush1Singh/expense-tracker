@@ -1,21 +1,43 @@
-import React from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
+
 const apiUrl = "http://127.0.0.1:8000";
 export async function loginHandler(username) {
   const res = await axios.post(`${apiUrl}/login`, { username });
+  if (res.data.status == "success") {
+    toast("success");
+  } else {
+    toast("failed");
+  }
   return res.data;
 }
 export async function singupHandler(username, name) {
   const res = await axios.post(`${apiUrl}/signup`, { username, name });
+  if (res.data.status == "success") {
+    toast("success");
+  } else {
+    toast("failed");
+  }
   return res.data;
 }
 
 export async function getGroups(username) {
   const res = await axios.get(`${apiUrl}/users/${username}/groups`);
-  return res.data;
+  console.log(res);
+  if (res.data.status == "success") {
+    toast("success");
+  } else {
+    toast("failed");
+  }
+  return res?.data;
 }
 export async function createGroup(name, members) {
   const res = await axios.post(`${apiUrl}/groups`, { members, name });
+  if (res.data.status == "success") {
+    toast("success");
+  } else {
+    toast("failed");
+  }
   return res.data;
 }
 export async function insertExpense(data) {
@@ -54,17 +76,32 @@ export async function insertExpense(data) {
     split,
     split_type: isSelected ? "equal" : "percentage",
   });
+  if (res.data.status == "success") {
+    toast("success");
+  } else {
+    toast("failed");
+  }
   console.log(res);
 }
 
 export async function getSummary(data) {
   const { groupID } = data;
   const res = await axios.get(`${apiUrl}/groups/${groupID}`);
-  return res.data;
+  if (res.data.status == "success") {
+    toast("success");
+  } else {
+    toast("failed");
+  }
+  return res.data.response;
 }
 export async function getUserSummary(username) {
   const res = await axios.get(`${apiUrl}/users/${username}/balances`);
-  return res.data;
+  if (res.data.status == "success") {
+    toast("success");
+  } else {
+    toast("failed");
+  }
+  return res.data.response;
 }
 export async function PayBackExpenseById(id, username) {
   console.log(username, id);
@@ -72,4 +109,54 @@ export async function PayBackExpenseById(id, username) {
     id,
     username,
   });
+
+  if (res.data.status == "success") {
+    toast("success");
+  } else {
+    toast("failed");
+  }
+}
+export async function createSession(user_id) {
+  const res = await axios.post(`${apiUrl}/users/${user_id}/create_session`);
+  console.log(res);
+  if (res.data.status == "success") {
+    toast("success");
+  } else {
+    toast("failed");
+  }
+  return res.data.response;
+}
+export async function queryResolve(user_id, session_id, query) {
+  const res = await axios.get(
+    `${apiUrl}/users/${user_id}/query/${session_id}`,
+    {
+      params: { query },
+    }
+  );
+  if (res.data.status == "success") {
+    console.log("");
+  } else {
+    toast("failed");
+  }
+  return res.data.response;
+}
+export async function loadAll(user_id) {
+  const res = await axios.get(`${apiUrl}/users/${user_id}/load_all_chat`);
+  if (res.data.status == "success") {
+    toast("success");
+  } else {
+    toast("failed");
+  }
+  return res.data.response;
+}
+export async function loadChat(user_id, session_id) {
+  const res = await axios.get(
+    `${apiUrl}/users/${user_id}/load_chat/${session_id}`
+  );
+  if (res.data.status == "success") {
+    toast("success");
+  } else {
+    toast("failed");
+  }
+  return res.data.response;
 }
