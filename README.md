@@ -1,4 +1,4 @@
-# 💸 Neurix Group Expense Tracker
+# 💸 Group Expense Tracker
 
 A full-stack group expense management and chat application, featuring a FastAPI backend and a modern React (Vite) frontend.
 
@@ -41,6 +41,8 @@ npm run dev
 ```
 
 ---
+### Check out Deployed Version (may be slow/non-responding at starting)
+- https://expense-tracker-deployed-plum.vercel.app/
 
 ## 📚 API Documentation
 
