@@ -77,7 +77,6 @@ npm run dev
 
 ## 📝 Assumptions
 
-- MongoDB is available and accessible to the backend (update connection string in backend if needed).
 - The backend and frontend communicate via RESTful APIs.
 - All endpoints require valid data; no authentication middleware is implemented by default.
 - The frontend expects the backend to be running at `http://localhost:8000` (update in frontend config if changed).
