@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI,Query
 from fastapi import Request
 from controllers.group_controller import *
 from controllers.expense_controller import *
@@ -8,6 +8,7 @@ from models.Group import Group
 from models.Expenses import Expense
 from fastapi.middleware.cors import CORSMiddleware
 from db.database import *
+from controllers.chat_controller import *
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
@@ -53,36 +54,62 @@ async def create_new_group(request: Request):
     "name": group.name,
     "members": [user.username for user in members]
   }
+  
+  
+  
+  
+  
 @app.get('/groups/{group_id}')
 def get_group_details(group_id):
-  return group_details(group_id)
+  try:
+    res=group_details(group_id)
+    return {'status':'success','response':res}
+  except Exception as e:
+    return {'status':'failed'}
+  
+
 @app.post('/groups/{group_id}/expenses')
 async def add_new_expense(request: Request, group_id):
-
-  data = await request.json()
-  print(data)
-  user_id = data.get("user_id")
-  amount = data.get("amount")
-  description = data.get("description")
-  split_type = data.get("split_type")
-  split = data.get("split", [])
-  # Call the add_expense function
-  expense_record = add_expense(
-    user_id=user_id,
-    amount=amount,
-    description=description,
-    split_type=split_type,
-    split=split,
-    group_id=group_id,
-  )
-  
-  return expense_record
+  try:
+    data = await request.json()
+    print(data)
+    user_id = data.get("user_id")
+    amount = data.get("amount")
+    description = data.get("description")
+    split_type = data.get("split_type")
+    split = data.get("split", [])
+    # Call the add_expense function
+    expense_record = add_expense(
+      user_id=user_id,
+      amount=amount,
+      description=description,
+      split_type=split_type,
+      split=split,
+      group_id=group_id,
+    )
+    return {'status':'success','response':expense_record}
+  except Exception as e:
+    return {'status':'failed'}
+    
 @app.get('/groups/{group_id}/balances')
 async def func(request:Request,group_id):
-  return group_details(group_id)
+  try:
+    res=group_details(group_id)
+    if(res is None):
+      return {'status':'failed'}
+    else:
+      return {'status':'failed',"response":res}
+  except Exception as e:
+      return {'status':'failed'}
+
 @app.get('/users/{user_id}/balances')
 async def func2(request:Request,user_id):
-  return get_balances(user_id)
+  try:
+    res=get_balances(user_id)
+    return {'status':'success','response':res}
+  except Exception as e:
+    return {'status':'failed'}
+  
 @app.post('/login')
 async def login(request:Request):
   data = await request.json()
@@ -102,24 +129,57 @@ async def signup(request:Request):
   else:    
     create_user(name,username)
     return {'status':'success'}
-@app.get('/user/{user_id}/groups')
-def func6(request:Request,user_id):
-  return getAllGroups(user_id)
 @app.get('/users/{user_id}/groups')
 async def get_all_groups(request:Request,user_id):
-  answer=getAllGroups(user_id)
-  return {'message':'success','response':answer}
+  try:
+    answer=getAllGroups(user_id)
+    return {'status':'success','response':answer}
+  except Exception as e:
+    return {'status':'failed'}
+  
 @app.post('/users/payBack')
 async def payBack(request:Request):
-  body =await request.json()
-  username=body.get('username')
-  expense_id=body.get('id')
-  print(body)
-  pay(expense_id,username)
-  return {'status':'success'}
+  try:
+    body =await request.json()
+    username=body.get('username')
+    expense_id=body.get('id')
+    print(body)
+    pay(expense_id,username)
+    return {'status':'success'}
+  except Exception as e:
+    return {'status':'failed'}
 
 
+@app.post('/users/{user_id}/create_session')
+async def create_seesio(user_id):
+  try:
+    res=create_session(user_id)
+    print(user_id)
+    return {'status':'success',"response":res}
+  except Exception as e:
+    return {'status':'failed'}
 
-@app.get('users/{user_id}/query')
-async def func3():
- return None
+@app.get('/users/{user_id}/query/{session_id}')
+async def resolve(session_id,user_id,query= Query(None)):
+  try:
+    print(query,session_id,user_id)
+    res=await chat(query,session_id,user_id)
+    return {'status':'success','response':res}
+  except Exception as e:
+    return {'status':'failed'}
+
+@app.get('/users/{user_id}/load_all_chat')
+async def func10(user_id):
+  try:
+    res= get_all_sessions(user_id)
+    return {'status':'success',"response":res}
+  except Exception as e:
+    return {'status':'failed'}
+
+@app.get('/users/{user_id}/load_chat/{session_id}')
+async def func11(user_id,session_id):
+  try:
+    res=get_session(session_id,user_id)
+    return {'status':'success','response':res}
+  except Exception as e:
+    return {'status':'failed'}

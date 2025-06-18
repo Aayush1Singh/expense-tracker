@@ -1,9 +1,7 @@
 from mongoengine import Document, StringField, IntField, ReferenceField, ListField, EnumField,BooleanField
 from enum import Enum
-# from models.User import User
-# from models.Group import Group
-# Assuming you have a User model defined elsewhere
-
+from mongoengine import DateTimeField
+from datetime import datetime
 class SplitType(Enum):
   EQUAL = "equal"
   PERCENTAGE = "percentage"
@@ -14,5 +12,7 @@ class Expense(Document):
   paid_by = ReferenceField("User", required=True)
   split_type = EnumField(SplitType, required=True)
   split = ListField(IntField(), required=True)
-  group=ReferenceField("Group")
+  group = ReferenceField("Group")
   isPaid = ListField(field=BooleanField(), required=True)
+  created_at = DateTimeField(default=datetime.utcnow)
+  
