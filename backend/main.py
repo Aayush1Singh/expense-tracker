@@ -1,4 +1,4 @@
-from fastapi import FastAPI,Query
+from fastapi import FastAPI,Query,Body
 from fastapi import Request
 from controllers.group_controller import *
 from controllers.expense_controller import *
@@ -21,10 +21,11 @@ app.add_middleware(
 async def root():
   return {"message": "Hello World"}
 @app.post('/groups')
-async def create_new_group(request: Request):
+async def create_new_group(request: Request,item= Body()):
   data = await request.json()
   name = data.get("name")
   member_usernames = data.get("members", [])
+
   print(data)
   # Fetch User objects by username
   members = list(User.objects(username__in=member_usernames))
@@ -38,7 +39,6 @@ async def create_new_group(request: Request):
   print(myDict,username_not_present)
   if(len(username_not_present)>0): 
     return {'status':'failed','members':username_not_present}
-  
   # Create the group
   group = Group(name=name, members=members, expenses=[])
   group.save()
@@ -54,11 +54,6 @@ async def create_new_group(request: Request):
     "name": group.name,
     "members": [user.username for user in members]
   }
-  
-  
-  
-  
-  
 @app.get('/groups/{group_id}')
 def get_group_details(group_id):
   try:
@@ -67,9 +62,8 @@ def get_group_details(group_id):
   except Exception as e:
     return {'status':'failed'}
   
-
 @app.post('/groups/{group_id}/expenses')
-async def add_new_expense(request: Request, group_id):
+async def add_new_expense(request: Request, group_id,item= Body()):
   try:
     data = await request.json()
     print(data)
@@ -111,7 +105,7 @@ async def func2(request:Request,user_id):
     return {'status':'failed'}
   
 @app.post('/login')
-async def login(request:Request):
+async def login(request:Request,item= Body()):
   data = await request.json()
   username=data.get('username')
   print(username)
@@ -120,7 +114,7 @@ async def login(request:Request):
   else:
     return {"status":'failed'}
 @app.post('/signup')
-async def signup(request:Request):
+async def signup(request:Request,item= Body()):
   data = await request.json()
   username=data.get('username')
   name=data.get('name')
@@ -138,7 +132,7 @@ async def get_all_groups(request:Request,user_id):
     return {'status':'failed'}
   
 @app.post('/users/payBack')
-async def payBack(request:Request):
+async def payBack(request:Request,item= Body()):
   try:
     body =await request.json()
     username=body.get('username')

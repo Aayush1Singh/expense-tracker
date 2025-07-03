@@ -9,8 +9,4 @@ class User(Document):
     last_name = StringField(max_length=50)
     username=StringField()
     groups = ListField(ReferenceField("Group"), default=[])
-    all_sessions = ListField(EmbeddedDocumentField(SessionInfo))    
-    
-    
-
-  
+    all_sessions = ListField(EmbeddedDocumentField(SessionInfo))

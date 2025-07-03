@@ -2,6 +2,7 @@ import { useState } from "react";
 import { X, Plus, Users, Trash2 } from "lucide-react";
 import { createGroup } from "../services/Handler";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 const CreateGroupModal = ({ onClose, onCreateGroup }) => {
   const username = useSelector((state) => state.user.username);
@@ -32,15 +33,15 @@ const CreateGroupModal = ({ onClose, onCreateGroup }) => {
       const res = await createGroup(groupName.trim(), validMembers);
       console.log(res);
       if (res.status == "failed") {
-        alert(`${res.members} not found`);
+        toast.error(`${res.members} not found`);
       } else {
         console.log("created");
+        onCreateGroup({
+          name: groupName.trim(),
+          members: validMembers,
+        });
+        onClose();
       }
-      onCreateGroup({
-        name: groupName.trim(),
-        members: validMembers,
-      });
-      onClose();
     }
   };
 

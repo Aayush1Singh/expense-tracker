@@ -115,6 +115,7 @@ export async function PayBackExpenseById(id, username) {
   } else {
     toast("failed");
   }
+  return res.data;
 }
 export async function createSession(user_id) {
   const res = await axios.post(`${apiUrl}/users/${user_id}/create_session`);

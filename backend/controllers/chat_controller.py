@@ -88,6 +88,7 @@ $$${response}$$$""",input_variables=['summary','query','response'])
 prompt_title=PromptTemplate(template="""Given a user query(delimited by @) generate a small title for the chat.
 Enssure to just give the title and **not** give any meta commentary
 @{query}@""",input_variables=['query'])
+
 chat_llm=GoogleGenerativeAI(
   model="gemini-2.5-flash-preview-05-20",
   google_api_key=os.getenv('GEMINI_KEY'),

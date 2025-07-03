@@ -26,6 +26,7 @@ const ExpenseForm = ({
     data.isSelected = isSelected;
     console.log(data);
     insertExpense(data);
+    onClose();
   }
 
   return (

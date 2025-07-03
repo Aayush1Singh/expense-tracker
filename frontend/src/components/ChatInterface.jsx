@@ -85,14 +85,16 @@ const ChatInterface = () => {
 
   return (
     <div className="flex h-screen bg-gray-50">
-      <ChatSidebar
-        chats={chats}
-        activeChat={activeChat}
-        onSelectChat={setActiveChat}
-        onNewChat={createNewChat}
-        isOpen={sidebarOpen}
-        onToggle={() => setSidebarOpen(!sidebarOpen)}
-      />
+      <div className="h-full overflow-y-scroll ">
+        <ChatSidebar
+          chats={chats}
+          activeChat={activeChat}
+          onSelectChat={setActiveChat}
+          onNewChat={createNewChat}
+          isOpen={sidebarOpen}
+          onToggle={() => setSidebarOpen(!sidebarOpen)}
+        />
+      </div>
 
       {/* Main chat area */}
       <div className="flex flex-col flex-1">
