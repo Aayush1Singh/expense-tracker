@@ -1,4 +1,4 @@
-# 💸 Neurix Group Expense Tracker
+# 💸 Group Expense Tracker
 
 A full-stack group expense management and chat application, featuring a FastAPI backend and a modern React (Vite) frontend.
 
@@ -41,6 +41,8 @@ npm run dev
 ```
 
 ---
+### Check out Deployed Version (may be slow/non-responding at starting)
+- https://expense-tracker-deployed-plum.vercel.app/
 
 ## 📚 API Documentation
 
@@ -76,8 +78,7 @@ npm run dev
 ---
 
 ## 📝 Assumptions
-
-- MongoDB is available and accessible to the backend (update connection string in backend if needed).
+- The Device on which this container is runned is connected via a internet connection
 - The backend and frontend communicate via RESTful APIs.
 - All endpoints require valid data; no authentication middleware is implemented by default.
 - The frontend expects the backend to be running at `http://localhost:8000` (update in frontend config if changed).
